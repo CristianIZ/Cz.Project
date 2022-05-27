@@ -4,4 +4,14 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Cz.Project.Abstraction\Cz.Project.Abstraction.csproj" />
+    <ProjectReference Include="..\Cz.Project.Dto\Cz.Project.Dto.csproj" />
+    <ProjectReference Include="..\Cz.Project.Repository\Cz.Project.Repository.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="NewFolder\" />
+  </ItemGroup>
+
 </Project>

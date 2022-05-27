@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="11.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.ExpressionMapping" Version="5.0.2" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cz.Project.Domain\Cz.Project.Domain.csproj" />
+    <ProjectReference Include="..\Cz.Project.Dto\Cz.Project.Dto.csproj" />
+    <ProjectReference Include="..\Cz.Project.EFContext\Cz.Project.EFContext.csproj" />
+    <ProjectReference Include="..\Cz.Project.SQLContext\Cz.Project.SQLContext.csproj" />
+  </ItemGroup>
+
+</Project>
