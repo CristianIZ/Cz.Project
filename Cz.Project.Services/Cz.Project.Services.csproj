@@ -10,8 +10,4 @@
     <ProjectReference Include="..\Cz.Project.Repository\Cz.Project.Repository.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="NewFolder\" />
-  </ItemGroup>
-
 </Project>

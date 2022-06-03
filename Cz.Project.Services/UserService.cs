@@ -2,6 +2,7 @@
 using Cz.Project.Dto.Exceptions;
 using Cz.Project.Repository;
 using Cz.Project.Services.Helpers;
+using Cz.Project.Services.UserSession;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,32 +11,32 @@ namespace Cz.Project.Services
 {
     public class UserService
     {
+        public bool IsLoggedIn()
+        {
+            var user = Session.GetInstance();
+
+            if (user != null)
+                return true;
+            else
+                return false;
+        }
+
         /// <summary>
         /// Try to login user, if cant throws an error with detailed information
         /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
         public AdminUserDto Login(AdminUserDto user)
         {
             try
             {
-                var userRepository = new UserRepository();
-
-                var adminUser = userRepository.GetByName(user);
-
-                if (adminUser == null)
-                    throw new InvalidAdminUsersException("User not found");
-
-                if (!HashHelper.VerifyHash(user.Password, HasAlgorithm.SHA512, adminUser.Password))
-                    throw new IncorrectAdminUsersPasswordException($"Incorrect password for user name: {adminUser.Name} key: {adminUser.Key}");
-
-                return adminUser;
+                Session.Login(user);
+                return Session.GetInstance().AdminUser;
             }
             catch (Exception)
             {
                 throw;
             }
         }
+
         public IList<AdminUserDto> GetAll()
         {
             try

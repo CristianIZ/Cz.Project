@@ -19,6 +19,6 @@ namespace Cz.Project.Dto
 
         public string Name { get { return _name; } }
         public abstract void AddChild(ComponentDto c);
-        public abstract IReadOnlyCollection<ComponentDto> GetChilds();
+        public abstract IList<ComponentDto> GetChilds();
     }
 }

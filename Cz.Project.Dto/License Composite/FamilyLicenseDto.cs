@@ -7,7 +7,7 @@ namespace Cz.Project.Dto
 {
     public class FamilyLicenseDto : ComponentDto
     {
-        private List<ComponentDto> childs;
+        private IList<ComponentDto> childs;
 
         public FamilyLicenseDto(string name, int code) : base(name, code)
         {
@@ -24,9 +24,9 @@ namespace Cz.Project.Dto
             childs.Add(c);
         }
 
-        public override IReadOnlyCollection<ComponentDto> GetChilds()
+        public override IList<ComponentDto> GetChilds()
         {
-            return childs.AsReadOnly();
+            return childs;
         }
     }
 }

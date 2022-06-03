@@ -1,5 +1,6 @@
 ﻿using Cz.Project.Dto.Exceptions;
 using Cz.Project.Services;
+using Cz.Project.UI.Forms.FormResponses;
 using Cz.Project.UI.Shared;
 using System;
 using System.Collections.Generic;
@@ -13,8 +14,7 @@ namespace Cz.Project.UI.Forms
 {
     public partial class LoginForm : Form
     {
-        public static LicenseForm licenseForm = new LicenseForm();
-        public UserService userService = new UserService();
+        public LoginFormResponse response = new LoginFormResponse();
 
         public LoginForm()
         {
@@ -23,6 +23,20 @@ namespace Cz.Project.UI.Forms
 
         private void LoginForm_Load(object sender, EventArgs e)
         {
+            var userService = new UserService();
+            if (userService.IsLoggedIn())
+            {
+                MessageBox.Show("Ya se encuentra un usuario logueado");
+                this.Close();
+            }
+
+            txtUserName.Text = "Admin";
+            txtUserPassword.Text = "123456789";
+
+            this.response = new LoginFormResponse()
+            {
+                LoginSuccessfully = false
+            };
         }
 
         private void btnSubmit_Click(object sender, EventArgs e)
@@ -34,14 +48,18 @@ namespace Cz.Project.UI.Forms
                     Name = txtUserName.Text,
                     Password = txtUserPassword.Text,
                 };
-
+                
+                var userService = new UserService();
                 var userResponse = userService.Login(user);
 
                 if (userResponse != null)
                 {
-                    Variables.IsLoggedIn = true;
-                    MessageBox.Show("Logueado correctamente");
-                    this.Hide();
+                    this.response = new LoginFormResponse()
+                    {
+                        LoginSuccessfully = true
+                    };
+
+                    this.Close();
                 }
             }
             catch (InvalidAdminUsersException ex)

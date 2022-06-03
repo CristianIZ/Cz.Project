@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace Cz.Project.SQLContext
 {
@@ -23,21 +24,21 @@ namespace Cz.Project.SQLContext
         public AdminUsers GetByName(AdminUsers adminUsers)
         {
             string query = $"SELECT * FROM [AdminUsers] WHERE [Name] = @Name";
-            
+
             var sqlParameters = new ArrayList();
             sqlParameters.Add(CreateParameter($"@{nameof(adminUsers.Name)}", adminUsers.Name));
 
             using (var DA = new SQLDataAccess())
             {
                 var tabla = DA.Read(query, sqlParameters);
-                return ReadUser(tabla);
+                return ReadUsers(tabla).FirstOrDefault();
             }
         }
 
         public void Delete(AdminUsers adminUser)
         {
             string query = $"DELETE FROM AdminUsers WHERE Id = @Id";
-            
+
             var sqlParameters = new ArrayList();
             sqlParameters.Add(CreateParameter($"@{nameof(adminUser.Id)}", adminUser.Id));
 
@@ -67,31 +68,6 @@ namespace Cz.Project.SQLContext
             }
         }
 
-        public AdminUsers ReadUser(DataTable table)
-        {
-            if (table.Rows.Count > 0)
-            {
-                AdminUsers user = null;
-
-                foreach (DataRow item in table.Rows)
-                {
-                    user = new AdminUsers();
-
-                    user.Id = Convert.ToInt32(item["Id"]);
-                    user.Name = item["Name"].ToString();
-                    user.Password = item["Password"].ToString();
-
-                    break;
-                }
-
-                return user;
-            }
-            else
-            {
-                return null;
-            }
-        }
-
         public IList<AdminUsers> ReadUsers(DataTable table)
         {
             if (table.Rows.Count > 0)
@@ -100,13 +76,7 @@ namespace Cz.Project.SQLContext
 
                 foreach (DataRow item in table.Rows)
                 {
-                    var user = new AdminUsers();
-
-                    user.Id = Convert.ToInt32(item["Id"]);
-                    user.Name = item["Name"].ToString();
-                    user.Password = item["Password"].ToString();
-
-                    users.Add(user);
+                    users.Add(MapUser(item));
                 }
 
                 return users;
@@ -115,6 +85,16 @@ namespace Cz.Project.SQLContext
             {
                 return null;
             }
+        }
+
+        public AdminUsers MapUser(DataRow dataRow)
+        {
+            return new AdminUsers()
+            {
+                Id = Convert.ToInt32(dataRow["Id"]),
+                Name = dataRow["Name"].ToString(),
+                Password = dataRow["Password"].ToString()
+            };
         }
 
         public SqlParameter CreateParameter(string parameterName, object value)

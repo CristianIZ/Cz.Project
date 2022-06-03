@@ -74,7 +74,7 @@
             this.btnSubmit.Location = new System.Drawing.Point(119, 81);
             this.btnSubmit.Name = "btnSubmit";
             this.btnSubmit.Size = new System.Drawing.Size(75, 23);
-            this.btnSubmit.TabIndex = 1;
+            this.btnSubmit.TabIndex = 2;
             this.btnSubmit.Text = "Aceptar";
             this.btnSubmit.UseVisualStyleBackColor = true;
             this.btnSubmit.Click += new System.EventHandler(this.btnSubmit_Click);
@@ -84,7 +84,7 @@
             this.txtUserPassword.Location = new System.Drawing.Point(94, 52);
             this.txtUserPassword.Name = "txtUserPassword";
             this.txtUserPassword.Size = new System.Drawing.Size(100, 23);
-            this.txtUserPassword.TabIndex = 0;
+            this.txtUserPassword.TabIndex = 1;
             // 
             // txtUserName
             // 

@@ -16,9 +16,9 @@ namespace Cz.Project.Dto
             throw new NotImplementedException();
         }
 
-        public override IReadOnlyCollection<ComponentDto> GetChilds()
+        public override IList<ComponentDto> GetChilds()
         {
-            throw new NotImplementedException();
+            return null;
         }
     }
 }

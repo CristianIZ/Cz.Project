@@ -6,6 +6,5 @@ namespace Cz.Project.UI.Shared
 {
     public static class Variables
     {
-        public static bool IsLoggedIn = false;
     }
 }
