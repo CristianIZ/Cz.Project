@@ -1,4 +1,5 @@
-﻿using Cz.Project.Domain;
+﻿using Cz.Project.Abstraction;
+using Cz.Project.Domain;
 using Cz.Project.Dto;
 using Cz.Project.SQLContext.Services;
 using System;
@@ -10,25 +11,29 @@ namespace Cz.Project.Services
 {
     public class LicenseService
     {
+        /// <summary>
+        /// Get from database and builds the composite
+        /// </summary>
+        /// <returns></returns>
         public IList<ComponentDto> GetLicenseTree()
         {
-            var licenseContext = new LicensesContext();
-            var licenselicenseContext = new LicenseLicenseContext();
+            var licenses = new LicensesContext().GetAll();
+            var licenseRelation = new LicenseLicenseContext().GetAll();
 
-            var licenses = licenseContext.GetAll();
-            var licenseRelation = licenselicenseContext.GetAll();
 
-            IList<ComponentDto> familyRootLicenses = new List<ComponentDto>();
-            IList<License> rootLicenses = new List<License>();
 
-            foreach (var license in licenses)
-            {
-                if (licenseRelation.Where(lr => lr.IdHijo == license.Id).Count() == 0)
-                {
-                    familyRootLicenses.Add(MapLicense(license, true));
-                    rootLicenses.Add(license);
-                }
-            }
+            return BuildTree(licenses, licenseRelation);
+        }
+
+        /// <summary>
+        /// Builds a tree with given licenses and relations
+        /// </summary>
+        /// <param name="licenses">All the licenses</param>
+        /// <param name="licenseRelation">All the relations</param>
+        /// <returns></returns>
+        public IList<ComponentDto> BuildTree(IList<License> licenses, IList<LicenseLicense> licenseRelation)
+        {
+            var rootLicenses = GetRootLicenses(licenses, licenseRelation);
 
             var linceseTree = new List<ComponentDto>();
 
@@ -42,10 +47,25 @@ namespace Cz.Project.Services
             return linceseTree;
         }
 
+        private IList<License> GetRootLicenses(IList<License> licenses, IList<LicenseLicense> licenseRelation)
+        {
+            IList<License> rootLicenses = new List<License>();
+
+            // Recorro todas las licencias
+            foreach (var license in licenses)
+            {
+                // Cuando no es hijo de nadie es Root
+                if (licenseRelation.Where(lr => lr.IdHijo == license.Id).Count() == 0)
+                    rootLicenses.Add(license);
+            }
+
+            return rootLicenses;
+        }
+
         /// <summary>
         /// Recursive function that build the tree for the given license
         /// </summary>
-        public void FillRootLicense(License rootLic, ref FamilyLicenseDto familyRoot, IList<License> licenses, IList<LicenseLicense> relations)
+        private void FillRootLicense(License rootLic, ref FamilyLicenseDto familyRoot, IList<License> licenses, IList<LicenseLicense> relations)
         {
             var childs = GetChilds(rootLic, licenses, relations);
 
@@ -67,7 +87,7 @@ namespace Cz.Project.Services
         /// <summary>
         /// Look for all the childs of the license
         /// </summary>
-        public IList<License> GetChilds(License license, IList<License> licenses, IList<LicenseLicense> relations)
+        private IList<License> GetChilds(License license, IList<License> licenses, IList<LicenseLicense> relations)
         {
             var childRelations = relations.Where(r => r.IdPadre == license.Id).ToList();
 
@@ -87,6 +107,15 @@ namespace Cz.Project.Services
                 return new FamilyLicenseDto(license.Name, 0);
             else
                 return new LicenseDto(license.Name, 0);
+        }
+
+        public IList<LicenseCodeRelation> MapToCodeRelation(IList<License> licenses, IList<LicenseLicense> licenseRelation)
+        {
+            return licenseRelation.Select(lr => new LicenseCodeRelation()
+            {
+                ChildCode = licenses.Where(l => l.Id == lr.IdHijo).First().Code,
+                ParentCode = licenses.Where(l => l.Id == lr.IdPadre).First().Code
+            }).ToList();
         }
     }
 }
