@@ -19,43 +19,52 @@ namespace Cz.Project.Services.Helpers
         /// </summary>
         public InMemoryLicenses()
         {
+            var licenseService = new LicenseService();
+
             this.licenses = new LicensesContext().GetAll();
-            this.licensesRelation = new LicenseLicenseContext().GetAll();
+            this.licenseCodeRelations = licenseService.MapToCodeRelation(this.licenses, new LicenseLicenseContext().GetAll());
         }
 
         public void AddLicense(string newLicenseName, int parentCode)
         {
-            var parentLicense = this.licenses.Where(l => l.Code == parentCode).First();
+            var licenseService = new LicenseService();
+            var newCode = licenseService.GetNewCode(this.licenses);
 
-            var license = new License()
+            var newLicense = new License()
             {
                 Name = newLicenseName,
-                Code = parentCode,
+                Code = newCode,
             };
 
-            var relation = new LicenseLicense()
+            this.licenses.Add(newLicense);
+
+            if (parentCode != 0)
             {
+                var parentLicense = this.licenses.Where(l => l.Code == parentCode).First();
 
-            };
+                var newRelation = new LicenseCodeRelation()
+                {
+                    ParentCode = parentLicense.Code,
+                    ChildCode = newCode,
+                };
 
-            this.licenses.Add(license);
-            this.licenseCodeRelations.Add();
-        }
-
-        /// <summary>
-        /// Populate lists from given lists
-        /// </summary>
-        /// <param name="licenses">List to store in memory</param>
-        /// <param name="licensesRelation">Relations to store in memory</param>
-        public InMemoryLicenses(IList<License> licenses, IList<LicenseLicense> licensesRelation)
-        {
-            this.licenses = licenses;
-            this.licensesRelation = licensesRelation;
+                this.licenseCodeRelations.Add(newRelation);
+            }
         }
 
         public IList<ComponentDto> GetTree()
         {
-            return new LicenseService().BuildTree(licenses, licensesRelation);
+            return new LicenseService().BuildTree(licenses, licenseCodeRelations);
+        }
+
+        public void SaveChanges()
+        {
+            var licenseService = new LicenseService();
+
+            var newLicenses = this.licenses;
+            var newRelations = this.licenseCodeRelations;
+
+            licenseService.AddLicensesAndRelations(newLicenses, newRelations);
         }
     }
 }

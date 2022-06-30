@@ -60,16 +60,14 @@ namespace Cz.Project.SQLContext
             {
                 throw ex;
             }
-             
+
             return Dt;
         }
 
-        public int? ExecuteQuery(string query, ArrayList parameters)
+        public void ExecuteQuery(string query, ArrayList parameters)
         {
             try
             {
-                int? result;
-
                 using (var cmd = new SqlCommand(query, Cnn))
                 {
                     try
@@ -87,24 +85,74 @@ namespace Cz.Project.SQLContext
                             }
                         }
 
-                        cmd.Transaction = Cnn.BeginTransaction();
-                        result = (int?)cmd.ExecuteScalar();
-                        cmd.Transaction.Commit();
-                        CloseConnection();
+                        var result = cmd.ExecuteScalar();
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
-                        cmd.Transaction.Rollback();
-                        CloseConnection();
                         throw;
                     }
+                    finally
+                    {
+                        CloseConnection();
+                    }
                 }
-
-                return result;
             }
             catch (Exception)
             {
                 throw;
+            }
+        }
+
+        public SqlCommand CreateCommand(string query, ArrayList parameters)
+        {
+            try
+            {
+                var command = new SqlCommand(query);
+
+                if ((parameters != null))
+                {
+                    foreach (SqlParameter data in parameters)
+                    {
+                        command.Parameters.Add(data);
+                    }
+                }
+
+                return command;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public void InsertAllCommands(IList<SqlCommand> sqlCommands)
+        {
+            SqlTransaction transaction = null;
+
+            try
+            {
+                OpenConnection();
+                transaction = Cnn.BeginTransaction();
+
+                foreach (var cmd in sqlCommands)
+                {
+                    cmd.Connection = Cnn;
+                    cmd.Transaction = transaction;
+                    cmd.ExecuteNonQuery();
+                }
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                if (transaction != null)
+                    transaction.Rollback();
+
+                throw;
+            }
+            finally
+            {
+                CloseConnection();
             }
         }
     }

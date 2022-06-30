@@ -6,11 +6,13 @@ using System.Text;
 
 namespace Cz.Project.Domain
 {
-    public class LicenseLicense : BaseEntity
+    public class Word : KeyEntity
     {
+        public Languaje Languaje { get; set; }
+        public int IdLanguaje { get; set; }
         [Required]
-        public int IdPadre { get; set; }
+        public string Translate { get; set; }
         [Required]
-        public int IdHijo { get; set; }
+        public int Code { get; set; }
     }
 }

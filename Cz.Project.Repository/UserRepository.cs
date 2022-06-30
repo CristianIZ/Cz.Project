@@ -48,17 +48,15 @@ namespace Cz.Project.Repository
             }
         }
 
-        public AdminUserDto Add(AdminUserDto adminUserDto)
+        public void Add(AdminUserDto adminUserDto)
         {
             try
             {
-                var efUserContext = new EF.AdminUsersContext();
+                var sqlUserContext = new SQL.AdminUsersContext();
 
                 var adminUser = mapper.Map<AdminUsers>(adminUserDto);
                 adminUser.Key = Guid.NewGuid().ToString();
-                adminUser = efUserContext.Add(adminUser);
-
-                return mapper.Map<AdminUserDto>(adminUser);
+                sqlUserContext.Add(adminUser);
             }
             catch (Exception)
             {
@@ -88,8 +86,10 @@ namespace Cz.Project.Repository
                 var sqlUserContext = new SQL.AdminUsersContext();
                 
                 var userCheck = sqlUserContext.GetByName(mapper.Map<AdminUsers>(newUserValues));
+
                 if (userCheck != null)
                     throw new CustomException("El usuario ya existe");
+
                 var userToChange = sqlUserContext.GetByName(mapper.Map<AdminUsers>(currentUser));
 
                 userToChange.Name = newUserValues.Name;

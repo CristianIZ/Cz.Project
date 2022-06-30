@@ -50,7 +50,7 @@ namespace Cz.Project.Services
             }
         }
 
-        public AdminUserDto Add(AdminUserDto adminUserDto)
+        public void Add(AdminUserDto adminUserDto)
         {
             try
             {
@@ -64,7 +64,7 @@ namespace Cz.Project.Services
 
                 adminUserDto.Password = HashHelper.Encrypt(adminUserDto.Password, HasAlgorithm.SHA512, null);
 
-                return userRepository.Add(adminUserDto);
+                userRepository.Add(adminUserDto);
             }
             catch (Exception)
             {

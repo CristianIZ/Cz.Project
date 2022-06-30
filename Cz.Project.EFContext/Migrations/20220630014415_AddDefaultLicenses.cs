@@ -7,16 +7,16 @@ namespace Cz.Project.EFContext.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.Sql("SET IDENTITY_INSERT Licenses ON");
-            migrationBuilder.Sql("INSERT INTO Licenses ([Id], [Name], [HasChilds]) VALUES (1, 'All', 1)");
-            migrationBuilder.Sql("INSERT INTO Licenses ([Id], [Name], [HasChilds]) VALUES (2, 'Restorant', 1)");
-            migrationBuilder.Sql("INSERT INTO Licenses ([Id], [Name], [HasChilds]) VALUES (3, 'Edit menu', 1)");
-            migrationBuilder.Sql("INSERT INTO Licenses ([Id], [Name], [HasChilds]) VALUES (4, 'Name', 0)");
-            migrationBuilder.Sql("INSERT INTO Licenses ([Id], [Name], [HasChilds]) VALUES (5, 'Price', 0)");
-            migrationBuilder.Sql("INSERT INTO Licenses ([Id], [Name], [HasChilds]) VALUES (6, 'Section', 0)");
-            migrationBuilder.Sql("INSERT INTO Licenses ([Id], [Name], [HasChilds]) VALUES (7, 'Schedule', 1)");
-            migrationBuilder.Sql("INSERT INTO Licenses ([Id], [Name], [HasChilds]) VALUES (8, 'Week days', 0)");
-            migrationBuilder.Sql("INSERT INTO Licenses ([Id], [Name], [HasChilds]) VALUES (9, 'Open time', 0)");
-            migrationBuilder.Sql("INSERT INTO Licenses ([Id], [Name], [HasChilds]) VALUES (10, 'Close time', 0)");
+            migrationBuilder.Sql("INSERT INTO Licenses ([Id], [Name], [Code]) VALUES (1, 'All', 1)");
+            migrationBuilder.Sql("INSERT INTO Licenses ([Id], [Name], [Code]) VALUES (2, 'Restorant', 2)");
+            migrationBuilder.Sql("INSERT INTO Licenses ([Id], [Name], [Code]) VALUES (3, 'Edit menu', 3)");
+            migrationBuilder.Sql("INSERT INTO Licenses ([Id], [Name], [Code]) VALUES (4, 'Name', 4)");
+            migrationBuilder.Sql("INSERT INTO Licenses ([Id], [Name], [Code]) VALUES (5, 'Price', 5)");
+            migrationBuilder.Sql("INSERT INTO Licenses ([Id], [Name], [Code]) VALUES (6, 'Section', 6)");
+            migrationBuilder.Sql("INSERT INTO Licenses ([Id], [Name], [Code]) VALUES (7, 'Schedule', 7)");
+            migrationBuilder.Sql("INSERT INTO Licenses ([Id], [Name], [Code]) VALUES (8, 'Week days', 8)");
+            migrationBuilder.Sql("INSERT INTO Licenses ([Id], [Name], [Code]) VALUES (9, 'Open time', 9)");
+            migrationBuilder.Sql("INSERT INTO Licenses ([Id], [Name], [Code]) VALUES (10, 'Close time', 10)");
             migrationBuilder.Sql("SET IDENTITY_INSERT Licenses OFF");
 
             migrationBuilder.Sql("INSERT INTO LicenseLicense ([IdPadre], [IdHijo]) VALUES (1, 2)");

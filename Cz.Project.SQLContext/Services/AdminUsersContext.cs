@@ -21,17 +21,47 @@ namespace Cz.Project.SQLContext
             }
         }
 
+        public AdminUsers GetById(int id)
+        {
+            string query = $"SELECT * FROM [AdminUsers] WHERE [id] = @id";
+
+            var sqlParameters = new ArrayList();
+            sqlParameters.Add(SqlHelper.CreateParameter("Id", id));
+
+            using (var DA = new SQLDataAccess())
+            {
+                var tabla = DA.Read(query, sqlParameters);
+                return ReadUsers(tabla)?.FirstOrDefault();
+            }
+        }
+
         public AdminUsers GetByName(AdminUsers adminUsers)
         {
             string query = $"SELECT * FROM [AdminUsers] WHERE [Name] = @Name";
 
             var sqlParameters = new ArrayList();
-            sqlParameters.Add(CreateParameter($"@{nameof(adminUsers.Name)}", adminUsers.Name));
+            sqlParameters.Add(SqlHelper.CreateParameter("Name", adminUsers.Name));
 
             using (var DA = new SQLDataAccess())
             {
                 var tabla = DA.Read(query, sqlParameters);
-                return ReadUsers(tabla).FirstOrDefault();
+                return ReadUsers(tabla)?.FirstOrDefault();
+            }
+        }
+
+        public void Add(AdminUsers adminUser)
+        {
+            string query = $"INSERT INTO AdminUsers ([Name], [Password], [Key]) VALUES (@Name, @Password, @Key);";
+
+            var sqlParameters = new ArrayList();
+
+            sqlParameters.Add(SqlHelper.CreateParameter("Name", adminUser.Name));
+            sqlParameters.Add(SqlHelper.CreateParameter("Password", adminUser.Password));
+            sqlParameters.Add(SqlHelper.CreateParameter("Key", adminUser.Key));
+
+            using (var DA = new SQLDataAccess())
+            {
+                DA.ExecuteQuery(query, sqlParameters);
             }
         }
 
@@ -40,7 +70,7 @@ namespace Cz.Project.SQLContext
             string query = $"DELETE FROM AdminUsers WHERE Id = @Id";
 
             var sqlParameters = new ArrayList();
-            sqlParameters.Add(CreateParameter($"@{nameof(adminUser.Id)}", adminUser.Id));
+            sqlParameters.Add(SqlHelper.CreateParameter("Id", adminUser.Id));
 
             using (var DA = new SQLDataAccess())
             {
@@ -58,9 +88,9 @@ namespace Cz.Project.SQLContext
 
             var sqlParameters = new ArrayList();
 
-            sqlParameters.Add(CreateParameter($"@{nameof(userToChange.Id)}", userToChange.Id));
-            sqlParameters.Add(CreateParameter($"@{nameof(userToChange.Name)}", userToChange.Name));
-            sqlParameters.Add(CreateParameter($"@{nameof(userToChange.Password)}", userToChange.Password));
+            sqlParameters.Add(SqlHelper.CreateParameter("Id", userToChange.Id));
+            sqlParameters.Add(SqlHelper.CreateParameter("Name", userToChange.Name));
+            sqlParameters.Add(SqlHelper.CreateParameter("Password", userToChange.Password));
 
             using (var DA = new SQLDataAccess())
             {
@@ -95,16 +125,6 @@ namespace Cz.Project.SQLContext
                 Name = dataRow["Name"].ToString(),
                 Password = dataRow["Password"].ToString()
             };
-        }
-
-        public SqlParameter CreateParameter(string parameterName, object value)
-        {
-            var sqlParameter = new SqlParameter();
-
-            sqlParameter.ParameterName = parameterName;
-            sqlParameter.Value = value;
-
-            return sqlParameter;
         }
     }
 }

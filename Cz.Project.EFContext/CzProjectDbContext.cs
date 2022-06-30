@@ -13,6 +13,8 @@ namespace Cz.Project.EFContext
         public DbSet<AdminUsers> AdminUsers { get; set; }
         public DbSet<License> Licenses { get; set; }
         public DbSet<LicenseLicense> LicenseLicense { get; set; }
+        public DbSet<Languaje> Languajes { get; set; }
+        public DbSet<Word> Words { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -22,10 +24,10 @@ namespace Cz.Project.EFContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<LicenseLicense>(l =>
-            {
-                l.HasNoKey();
-            });
+            // modelBuilder.Entity<LicenseLicense>(l =>
+            // {
+            //     l.HasNoKey();
+            // });
 
             ConfigureUniqueIndexes(modelBuilder);
             ConfigureDefaultValues(modelBuilder);

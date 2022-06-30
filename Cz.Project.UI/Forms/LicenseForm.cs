@@ -23,37 +23,51 @@ namespace Cz.Project.UI.Forms
         private void LicenseForm_Load(object sender, EventArgs e)
         {
             this.inMemoryLicenses = new InMemoryLicenses();
-
-            FillTreeView(this.inMemoryLicenses.GetTree());
+            RefreshTreeView();
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            if (this.licensesTreeView.SelectedNode == null)
+            try
             {
-                this.inMemoryLicenses.AddLicense(txtLicenseName.Name, 0);
+                if (this.licensesTreeView.SelectedNode == null)
+                {
+                    this.inMemoryLicenses.AddLicense(txtLicenseName.Text, 0);
+                }
+                else
+                {
+                    var select = (ComponentDto)this.licensesTreeView.SelectedNode.Tag;
+                    this.inMemoryLicenses.AddLicense(txtLicenseName.Text, select.licenceCode);
+                }
+
+                RefreshTreeView();
             }
-            else
+            catch (Exception)
             {
-                var select = (ComponentDto)this.licensesTreeView.SelectedNode.Tag;
-
-                // Type type1 = typeof(ComponentDto);
-                // Type type2 = typeof(FamilyLicenseDto);
-                // 
-                // object result;
-                // 
-                // if (type1 == select.GetType())
-                //     result = (ComponentDto)select;
-                // else if (type2 == select.GetType())
-                //     result = (FamilyLicenseDto)select;
-                // else
-                //     throw new Exception("Not valid type for selected item");
-
-                this.inMemoryLicenses.AddLicense(txtLicenseName.Name, select.licenceCode);
+                MessageBox.Show("Algo salio mal");
             }
         }
 
-        public void FillTreeView(IList<ComponentDto> tree)
+        private void btnSaveChanges_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                this.inMemoryLicenses.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Algo salio mal");
+            }
+        }
+
+        private void RefreshTreeView()
+        {
+            this.licensesTreeView.Nodes.Clear();
+            FillTreeView(this.inMemoryLicenses.GetTree());
+            this.licensesTreeView.ExpandAll();
+        }
+
+        private void FillTreeView(IList<ComponentDto> tree)
         {
             foreach (var item in tree)
             {
@@ -68,7 +82,7 @@ namespace Cz.Project.UI.Forms
             }
         }
 
-        public void PopulateTree(ref TreeNode root, IList<ComponentDto> tree)
+        private void PopulateTree(ref TreeNode root, IList<ComponentDto> tree)
         {
             foreach (var detail in tree)
             {

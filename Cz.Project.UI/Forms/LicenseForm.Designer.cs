@@ -34,6 +34,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
+            this.btnSaveChanges = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // licensesTreeView
@@ -71,27 +72,38 @@
             // 
             // btnEdit
             // 
-            this.btnEdit.Location = new System.Drawing.Point(12, 277);
+            this.btnEdit.Location = new System.Drawing.Point(167, 277);
             this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(236, 23);
+            this.btnEdit.Size = new System.Drawing.Size(153, 30);
             this.btnEdit.TabIndex = 4;
             this.btnEdit.Text = "Editar";
             this.btnEdit.UseVisualStyleBackColor = true;
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(254, 277);
+            this.btnDelete.Location = new System.Drawing.Point(12, 277);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(225, 23);
+            this.btnDelete.Size = new System.Drawing.Size(149, 30);
             this.btnDelete.TabIndex = 4;
             this.btnDelete.Text = "Eliminar";
             this.btnDelete.UseVisualStyleBackColor = true;
+            // 
+            // btnSaveChanges
+            // 
+            this.btnSaveChanges.Location = new System.Drawing.Point(326, 277);
+            this.btnSaveChanges.Name = "btnSaveChanges";
+            this.btnSaveChanges.Size = new System.Drawing.Size(153, 30);
+            this.btnSaveChanges.TabIndex = 5;
+            this.btnSaveChanges.Text = "Guardar Cambios";
+            this.btnSaveChanges.UseVisualStyleBackColor = true;
+            this.btnSaveChanges.Click += new System.EventHandler(this.btnSaveChanges_Click);
             // 
             // LicenseForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(488, 304);
+            this.ClientSize = new System.Drawing.Size(488, 321);
+            this.Controls.Add(this.btnSaveChanges);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnEdit);
             this.Controls.Add(this.label1);
@@ -114,5 +126,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnEdit;
         private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.Button btnSaveChanges;
     }
 }
