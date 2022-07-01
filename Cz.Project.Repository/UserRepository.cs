@@ -4,7 +4,6 @@ using Cz.Project.Dto;
 using Cz.Project.Dto.Exceptions;
 using Cz.Project.Repository.MappingProfile;
 using SQL = Cz.Project.SQLContext;
-using EF = Cz.Project.EFContext.Services;
 using System;
 using System.Collections.Generic;
 

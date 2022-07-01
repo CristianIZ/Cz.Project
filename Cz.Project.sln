@@ -25,13 +25,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cz.Project.Abstraction", "C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Context", "Context", "{B724452F-E7E9-42CE-8CD1-AF0CCAD9A006}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cz.Project.EFContext", "Cz.Project.EFContext\Cz.Project.EFContext.csproj", "{2F08188C-C2A9-42E1-8866-58416F26846F}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cz.Project.SQLContext", "Cz.Project.SQLContext\Cz.Project.SQLContext.csproj", "{EE6F8941-9B0E-445A-9EE8-CB0B6D97AA5A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cz.Project.UI", "Cz.Project.UI\Cz.Project.UI.csproj", "{E6168811-F6BE-41FA-9CA9-E893CC56545E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cz.Project.Repository", "Cz.Project.Repository\Cz.Project.Repository.csproj", "{B69FCFC4-11A0-47AD-85EA-5A1C21B74BD5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cz.Project.Repository", "Cz.Project.Repository\Cz.Project.Repository.csproj", "{B69FCFC4-11A0-47AD-85EA-5A1C21B74BD5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,10 +57,6 @@ Global
 		{A230EE39-2178-4D0B-92CC-136F4523720C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A230EE39-2178-4D0B-92CC-136F4523720C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A230EE39-2178-4D0B-92CC-136F4523720C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2F08188C-C2A9-42E1-8866-58416F26846F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2F08188C-C2A9-42E1-8866-58416F26846F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2F08188C-C2A9-42E1-8866-58416F26846F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2F08188C-C2A9-42E1-8866-58416F26846F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EE6F8941-9B0E-445A-9EE8-CB0B6D97AA5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EE6F8941-9B0E-445A-9EE8-CB0B6D97AA5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE6F8941-9B0E-445A-9EE8-CB0B6D97AA5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -80,7 +74,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{2F08188C-C2A9-42E1-8866-58416F26846F} = {B724452F-E7E9-42CE-8CD1-AF0CCAD9A006}
 		{EE6F8941-9B0E-445A-9EE8-CB0B6D97AA5A} = {B724452F-E7E9-42CE-8CD1-AF0CCAD9A006}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

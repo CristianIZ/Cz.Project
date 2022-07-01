@@ -13,7 +13,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Cz.Project.Domain\Cz.Project.Domain.csproj" />
     <ProjectReference Include="..\Cz.Project.Dto\Cz.Project.Dto.csproj" />
-    <ProjectReference Include="..\Cz.Project.EFContext\Cz.Project.EFContext.csproj" />
     <ProjectReference Include="..\Cz.Project.SQLContext\Cz.Project.SQLContext.csproj" />
   </ItemGroup>
 
