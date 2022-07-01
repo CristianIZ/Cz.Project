@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Cz.Project.Dto
+namespace Cz.Project.Abstraction
 {
     public class LicenseDto : ComponentDto
     {

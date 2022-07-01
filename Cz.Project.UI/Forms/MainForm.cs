@@ -1,4 +1,5 @@
-﻿using Cz.Project.UI.Shared;
+﻿using Cz.Project.Abstraction;
+using Cz.Project.UI.Shared;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,6 +20,8 @@ namespace Cz.Project.UI.Forms
         private void MainForm_Load(object sender, EventArgs e)
         {
             UIOptions(false);
+
+            // ((ToolStripDropDownItem)this.menuStrip1.Items[1]).DropDown.Items;
         }
 
         private void loginToolStripMenuItem_Click(object sender, EventArgs e)
@@ -56,6 +59,16 @@ namespace Cz.Project.UI.Forms
                 if (item.Text != "Login")
                     item.Enabled = enable;
             }
+        }
+
+        private void englishToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void españolToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

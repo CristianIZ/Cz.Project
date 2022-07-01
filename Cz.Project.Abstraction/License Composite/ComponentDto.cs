@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Cz.Project.Dto
+namespace Cz.Project.Abstraction
 {
     public abstract class ComponentDto
     {
